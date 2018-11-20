@@ -5,7 +5,7 @@ Highly Availabile Splash Cluster for crawling Javascript webpages using scrapy
 
 ## IN-PROGRESS
 
-## TODO: Use Terraform to deploy the below stack
+## TODO: Add k8s implementation
 
 ## Staging Environment
 

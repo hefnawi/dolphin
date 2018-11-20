@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+
+  proxy:
+    image: dockerflow/docker-flow-proxy
+    ports:
+      - 8060:80
+    networks:
+      - proxy
+    environment:
+      - "LISTENER_ADDRESS=swarm-listener"
+      - "MODE=swarm"
+      - "USERS=hefnawi:$$6$$WNNFqxU5G511h.Q$$A/I6ciUHF7OhYvOWrFNCDZ1YbCbyxwkPbgtEHcZ9VnTG0abUq0Kbyn0VrLoQm8hLFB991ZVs254KnQnumJEQ50"
+      - "USERS_PASS_ENCRYPTED=true"
+    deploy:
+      replicas: 3
+
+  floating-ip:
+    image: hefnawi/digitalocean-assign-ip
+    environment:
+      - "DO_TOKEN=${DO_TOKEN}"
+      - "IP=${FLOATING_IP}"
+    networks:
+      - proxy
+    deploy:
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.role == manager]
+
+  swarm-listener:
+    image: dockerflow/docker-flow-swarm-listener
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DF_NOTIFY_CREATE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/reconfigure
+      - DF_NOTIFY_REMOVE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/remove
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+
+networks:
+  proxy:
+    external: true

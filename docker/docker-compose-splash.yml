@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+    splash:
+        image: scrapinghub/splash:3.2
+        command: --max-timeout 3600 --slots 6 --port 8050 --verbosity 1 --disable-private-mode --disable-ui --disable-lua-sandbox --maxrss 2000
+        deploy:
+            replicas: 21
+            labels:
+                - com.df.notify=true
+                - com.df.servicePath=/execute
+                - com.df.port=8050
+            update_config:
+                parallelism: 3
+                delay: 10s
+            restart_policy:
+                condition: any
+                max_attempts: 6
+                window: 30s
+            # This replaces the older resource constraint options for non swarm mode in Compose files prior to version 3
+            resources:
+                # as a constrain
+                limits:
+                    cpus: '0.25'
+                    memory: 1G
+                # as always available
+                reservations:
+                    cpus: '0.05'
+                    memory: 1G
+
+        networks:
+            - proxy
+            - default
+
+networks:
+  default:
+    external: false
+  proxy:
+    external: true

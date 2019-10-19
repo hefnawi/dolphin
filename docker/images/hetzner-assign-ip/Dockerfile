@@ -2,8 +2,14 @@ FROM alpine:3.8
 
 LABEL maintainer="Ahmed Hefnawi <hello@hefnawi.me>"
 
-ENV DO_TOKEN="digitalocean_api_token" \
-    IP="floating_ip_addr"
+ARG ROBOT_USER="hetzner_robot_ws_user"
+ARG ROBOT_PASS="hetzner_robot_ws_pass"
+ARG IP="failover_ip_addr"
+
+
+ENV ROBOT_USER=$ROBOT_USER \
+    ROBOT_PASS=$ROBOT_PASS \
+    IP=$IP
 
 COPY master.sh /master.sh
 

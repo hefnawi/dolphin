@@ -1,6 +1,6 @@
 FROM alpine:3.8
 
-LABEL maintainer="Ahmed Hefnawi <me@ahmedhefnawi.com>"
+LABEL maintainer="Ahmed Hefnawi <hello@hefnawi.me>"
 
 ENV DO_TOKEN="digitalocean_api_token" \
     IP="floating_ip_addr"

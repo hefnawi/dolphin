@@ -1,4 +1,4 @@
-<img src="http://orig03.deviantart.net/98f7/f/2015/217/3/d/bri_dee_by_kopica-d94efwh.png" height="95"><img src="https://www.pro-linux.de/images/NB3/imgdb/o_logo-von-kubernetes.jpg" height="95">
+<img src="http://orig03.deviantart.net/98f7/f/2015/217/3/d/bri_dee_by_kopica-d94efwh.png" height="95">
 
 # dolphin
 Highly Availabile Splash Cluster for crawling Javascript webpages using scrapy
